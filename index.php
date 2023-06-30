@@ -1,3 +1,7 @@
+<?php include("./abeilles.php"); ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,35 +9,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
-    <script src="./js/main.js" type="module"></script>
     <title>Bees</title>
 </head>
 
 <body>
-    <?php include("./abeilles.php"); ?>
-
-    <?php foreach ($beesToSend as $key => $bee) : ?>
+    <?php $beesArr = $beesToDisplay;
+    foreach ($beesArr as $key => $bee) : ?>
         <div class=<?= strtolower($bee['name']) ?> id=<?= $key ?>><?= $bee['name'] ?> - <?= $bee['life'] ?> </div>
     <?php endforeach ?>
 
-    <form class="form-send-bee" action='abeilles.php' method="post">
-        <!-- <input type="text" id="bee-id" name="bee-id" value="<?= isset($email) ? $email : ''; ?>"> -->
+    <form class="form-send-bee" action='index.php' method="post">
+        <input type="text" name="hit-bee" hidden>
         <button id="hit" type="submit" value="hit">HIT</button>
     </form>
+
+    <?php if (isset($_POST['hit-bee'])) {
+        echo ('hit the bee');
+        $random_bee_id = rand(0, count($beesArr) - 1);
+        $beesArr = hitOrReset($random_bee_id, $bees);
+    }
+    ?>
     <script>
         let button = document.getElementById('hit');
 
         function hitBee(event) {
-            event.preventDefault();
-                        document.querySelectorAll(".selected").forEach((bee) => {
+            // event.preventDefault();
+            document.querySelectorAll(".selected").forEach((bee) => {
                 bee.classList.remove("selected");
             })
 
-            let randomBeeIndex = Math.floor(Math.random() * <?= count($beesToSend) ?>)
-            console.log(randomBeeIndex);
-            event.preventDefault();
-            let selectedBee = document.getElementById(randomBeeIndex);
-            selectedBee.classList.add("selected");
+
+            // let selectedBee = document.getElementById(<?= $random_bee_id ?>);
+            // selectedBee.classList.add("selected");
 
 
             // const formData = new FormData();
