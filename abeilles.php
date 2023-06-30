@@ -44,12 +44,23 @@ function hitOrReset($id, $bees)
     if (get_class($bee) === 'Queen') {
         echo ('THIS IS QUEEN');
     }
-
-
-
-
     echo ($bee->getLife());
     foreach ($bees as $bee) {
         $beesToDisplay[] = format($bee);
     }
+    return $beesToDisplay;
+}
+
+
+// fetch
+$data = file_get_contents("php://input");
+$data_decoded = json_decode($data, true);
+$bee_id = $data_decoded['bee_id'];
+if ($bee_id === 1) {
+    // $newArray = hitOrReset($bee_id, $bees);
+    // hitOrReset($bee_id, $bees);
+    // echo json_encode($bee_id);
+    echo json_encode($beesToDisplay);
+}else{
+    echo json_encode('coucou');
 }
