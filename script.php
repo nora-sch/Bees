@@ -13,16 +13,25 @@ session_start();
 $bees = unserialize($_SESSION['bees_instances']);
 
 if ($bee_id > 0) {
-    $beesToDisplay = [];
+    $bees_to_display = [];
     $bee = $bees[$bee_id];
     if ($bee->getLife() > 0) {
-        $bee->hit();
+        if (get_class($bee) === 'Queen' && $bee->getLife() <= $bee->getDamage()) {
+            $bee->hit();
+            // remove points from all bees and restart game
+            foreach ($bees as $key => $bee) {
+                if (get_class($bee) !== 'Queen' && $bee->getLife()>0)
+                    $bee->setLife(0);
+            }
+        } else {
+            $bee->hit();
+        }
     }
     foreach ($bees as $key => $bee) {
-        $beesToDisplay[$key] = format($bee);
+        $bees_to_display[$key] = format($bee);
     }
     header('Content-type: application/json');
-    echo json_encode((object)$beesToDisplay);
+    echo json_encode((object)$bees_to_display);
 }
 
 $_SESSION['bees_instances'] = serialize($bees);

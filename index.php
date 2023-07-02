@@ -1,81 +1,46 @@
-<?php include("./abeilles.php"); ?>
-
-
-
+<?php include("bees.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/main.js"></script>
     <title>Bees</title>
 </head>
 
 <body>
-    <?php $beesArr = $beesToDisplay;
-    foreach ($beesArr as $key => $bee) : ?>
-        <div class=<?= strtolower($bee['name']) ?> id=<?= $key ?>><?= $bee['name'] ?> - <?= $bee['life'] ?> </div>
-    <?php endforeach ?>
-    <button id="hit" type="submit" value="hit">HIT</button>
+    <main>
+        <div id="bees-list">
+            <?php foreach ($bees_to_display as $key => $bee) : ?>
+                <div class='<?= strtolower($bee['name']) ?> bee-card' id=<?= $key ?>>
+                    <img class="bee-img" src="img/<?= strtolower($bee['name']) ?>.jpg" alt="bee <?= strtolower($bee['name']) ?>" />
+                    <div class="card-info"> <span><?= $bee['name'] ?></span> <span class="points" id="<?= $key ?>-life"><?= $bee['life'] ?></span></div>
+                </div>
+            <?php endforeach ?>
+        </div>
+        <div id="btn-container">
+            <h3>ROUND <span id="round"></span></h3><button id="hit" type="submit" value="hit">HIT</button>
+            <button id="reset-game" class="hidden">RESET</button>
+        </div>
+    </main>
+
     <script>
-        let button = document.getElementById('hit');
+        if (!localStorage.getItem("round")) {
+            localStorage.setItem("round", 1);
+        }
+        const round = document.getElementById('round');
+        round.innerText = localStorage.getItem("round");
+        const buttonHit = document.getElementById('hit');
+        const buttonReset = document.getElementById('reset-game');
         let liveBees = [];
-        for (let i = 0; i < <?= count($beesArr) ?>; i++) {
+        for (let i = 0; i < <?= count($bees_to_display) ?>; i++) {
             liveBees[i] = i + 1;
         }
 
-
-
-        function hitBee(event) {
-
-            event.preventDefault();
-            document.querySelectorAll(".selected").forEach((bee) => {
-                bee.classList.remove("selected");
-            })
-
-            const randomBeeId = liveBees[Math.floor(Math.random() * liveBees.length)];
-
-            console.log(randomBeeId);
-            let selectedBee = document.getElementById(randomBeeId.toString());
-            selectedBee.classList.add("selected");
-
-            let data = {
-                bee_id: randomBeeId
-            }
-
-            console.log(data);
-            fetch('script.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json; charset=uft-8'
-                },
-                // body: formData
-                body: JSON.stringify(data)
-            }).then(response => {
-                if (response.ok) {
-                    console.log("data sent");
-                    return response.json();
-                } else {
-                    console.log("data not sent");
-                }
-            }).then(data => {
-                console.log(selectedBee);
-                selectedBee.innerText = `${data[randomBeeId].name} - ${data[randomBeeId].life}`;
-                if (data[randomBeeId].life <= 0) {
-                    selectedBee.classList.remove("last-hit");
-                    selectedBee.classList.add("defeated");
-                    // if defeated - delete one from liveBees array for select this bee anymore
-                    liveBees = liveBees.filter(beeIndex => beeIndex !== randomBeeId);
-                } else if (data[randomBeeId].life > 0 && data[randomBeeId].life <= data[randomBeeId].damage) {
-                    selectedBee.classList.add("last-hit");
-                }
-                console.log(liveBees);
-            }).catch((error) => {
-                console.log(error)
-            });
-        }
-        button.addEventListener('click', hitBee);
+        buttonHit.addEventListener('click', hitBee);
+        buttonReset.addEventListener('click', resetGame);
     </script>
 </body>
 

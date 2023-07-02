@@ -1,6 +1,6 @@
 <?php
 
-class Abeille
+class Bee
 {
     private $hitpoints;
     private $damage;
@@ -27,5 +27,9 @@ class Abeille
     public function getLife()
     {
         return $this->life;
+    }
+    public function setLife($points)
+    {
+        $this->life = $points;
     }
 }

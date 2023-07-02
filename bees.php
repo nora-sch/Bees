@@ -7,7 +7,7 @@ require_once './functions.php';
 // php -S localhost:3000
 
 $bees = [];
-$beesToDisplay = [];
+$bees_to_display = [];
 
 $queen = new Queen();
 $bees[1] = $queen;
@@ -21,7 +21,7 @@ for ($i = 0; $i < 8; $i++) {
 }
 
 foreach ($bees as $key => $bee) {
-    $beesToDisplay[$key] = format($bee);
+    $bees_to_display[$key] = format($bee);
 }
 session_start();
 $_SESSION['bees_instances'] = serialize($bees);

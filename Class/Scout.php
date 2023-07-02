@@ -1,6 +1,6 @@
 <?php
-require_once './Class/Abeille.php';
-class Scout extends Abeille
+require_once './Class/Bee.php';
+class Scout extends Bee
 {
 
     public function __construct()

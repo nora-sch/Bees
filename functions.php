@@ -6,6 +6,6 @@ function format($instance)
             'name' => get_class($instance),
             'points' => $instance->getHitPoints(),
             'damage' => $instance->getDamage(),
-            'life' => $instance->getLife()
+            'life' => $instance->getLife(),
         ];
 }

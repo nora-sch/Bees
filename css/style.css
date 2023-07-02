@@ -1,10 +1,107 @@
-.selected{
-    background-color: yellow;
-    border: solid 1px black;
+@import url("https://fonts.googleapis.com/css2?family=Belanosima:wght@400;600;700&display=swap");
+:root {
+  --dark: #101e29;
+  --accent: #cca761;
+  --light: #ffffff;
 }
-.defeated{
-    background-color: grey;
+* {
+  font-family: "Belanosima", sans-serif;
 }
-.last-hit{
-    background-color: red;
+body {
+  background-color: var(--dark);
+}
+main {
+  max-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 80%;
+  margin: 0 auto;
+}
+#bees-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.bee-card {
+  width: 15%;
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+  transition: transform 0.2s;
+}
+.bee-card > img {
+  width: 100%;
+}
+.card-info {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.points {
+  font-size: 32px;
+}
+.bee-card.queen {
+  background-color: var(--dark);
+  color: var(--light);
+}
+.bee-card.worker {
+  background-color: var(--accent);
+  color: var(--light);
+}
+.bee-card.scout {
+  background-color: var(--light);
+  color: var(--dark);
+}
+.selected {
+  transform: scale(1.1);
+}
+.selected.worker,
+.selected.queen {
+  outline: 5px solid var(--light);
+  outline-offset: -4px;
+}
+.selected.scout {
+  outline: 5px solid var(--accent);
+  outline-offset: -4px;
+}
+.defeated {
+  filter: grayscale(100%);
+}
+.last-hit {
+  background-color: red;
+}
+.hidden {
+  display: none;
+}
+
+#btn-container {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--light);
+}
+
+button {
+  width: 100px;
+  height: 50px;
+  padding: 5px;
+  border-radius: 10px;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+}
+button#hit {
+  background-color: var(--accent);
+}
+#round {
+  font-size: 36px;
 }
