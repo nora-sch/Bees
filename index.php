@@ -17,13 +17,7 @@
     foreach ($beesArr as $key => $bee) : ?>
         <div class=<?= strtolower($bee['name']) ?> id=<?= $key ?>><?= $bee['name'] ?> - <?= $bee['life'] ?> </div>
     <?php endforeach ?>
-
-    <form class="form-send-bee" action='index.php' method="post">
-        <input type="text" name="hit-bee" value="" hidden>
-        <button id="hit" type="submit" value="hit">HIT</button>
-    </form>
-
-
+    <button id="hit" type="submit" value="hit">HIT</button>
     <script>
         let button = document.getElementById('hit');
 
@@ -33,21 +27,17 @@
                 bee.classList.remove("selected");
             })
 
-            const randomBeeId = Math.floor(Math.random() * <?= count($beesArr) ?>) ;
+            let randomBeeId = Math.floor(Math.random() * (<?= count($beesArr) ?> - 1 + 1) + 1)
             console.log(randomBeeId);
-            let selectedBee = document.getElementById(randomBeeId);
+            let selectedBee = document.getElementById(randomBeeId.toString());
             selectedBee.classList.add("selected");
-
-
-            const formData = new FormData();
-            formData.append('bee_id', randomBeeId);
-            console.log(formData);
 
             let data = {
                 bee_id: randomBeeId
             }
+
             console.log(data);
-            fetch('abeilles.php', {
+            fetch('script.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json; charset=uft-8'
@@ -56,25 +46,17 @@
                 body: JSON.stringify(data)
             }).then(response => {
                 if (response.ok) {
-                    // console.log(response)
                     console.log("data sent");
                     return response.json();
                 } else {
                     console.log("data not sent");
                 }
-            }).then(data =>{
-                console.log(data);
+            }).then(data => {
+                console.log(selectedBee);
+                selectedBee.innerText=`${data[randomBeeId].name} - ${data[randomBeeId].life}`;
             }).catch((error) => {
                 console.log(error)
             });
-
-
-
-            // const data = {
-            //     "id": randomBeeIndex
-            // }
-            // document.cookie=`id=${randomBeeIndex}`;
-
         }
         button.addEventListener('click', hitBee);
     </script>
