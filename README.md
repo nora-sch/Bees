@@ -3,7 +3,7 @@
 ![interface of bees game](./img/bees-game.png)
 
 To start game in browser with address http://localhost:3000/ - 
-it's necessary to run the following command in terminal:
+it's necessary to run the following command in terminal from the root directory:
 ```
 php -S localhost:3000
 ```
