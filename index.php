@@ -20,14 +20,22 @@
     <button id="hit" type="submit" value="hit">HIT</button>
     <script>
         let button = document.getElementById('hit');
+        let liveBees = [];
+        for (let i = 0; i < <?= count($beesArr) ?>; i++) {
+            liveBees[i] = i + 1;
+        }
+
+
 
         function hitBee(event) {
+
             event.preventDefault();
             document.querySelectorAll(".selected").forEach((bee) => {
                 bee.classList.remove("selected");
             })
 
-            let randomBeeId = Math.floor(Math.random() * (<?= count($beesArr) ?> - 1 + 1) + 1)
+            const randomBeeId = liveBees[Math.floor(Math.random() * liveBees.length)];
+
             console.log(randomBeeId);
             let selectedBee = document.getElementById(randomBeeId.toString());
             selectedBee.classList.add("selected");
@@ -53,7 +61,16 @@
                 }
             }).then(data => {
                 console.log(selectedBee);
-                selectedBee.innerText=`${data[randomBeeId].name} - ${data[randomBeeId].life}`;
+                selectedBee.innerText = `${data[randomBeeId].name} - ${data[randomBeeId].life}`;
+                if (data[randomBeeId].life <= 0) {
+                    selectedBee.classList.remove("last-hit");
+                    selectedBee.classList.add("defeated");
+                    // if defeated - delete one from liveBees array for select this bee anymore
+                    liveBees = liveBees.filter(beeIndex => beeIndex !== randomBeeId);
+                } else if (data[randomBeeId].life > 0 && data[randomBeeId].life <= data[randomBeeId].damage) {
+                    selectedBee.classList.add("last-hit");
+                }
+                console.log(liveBees);
             }).catch((error) => {
                 console.log(error)
             });
