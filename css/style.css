@@ -3,6 +3,7 @@
   --dark: #101e29;
   --accent: #cca761;
   --light: #ffffff;
+  --danger: rgb(237, 70, 70);
 }
 * {
   font-family: "Belanosima", sans-serif;
@@ -74,8 +75,28 @@ main {
 .defeated {
   filter: grayscale(100%);
 }
-.last-hit {
-  background-color: red;
+.points.last-hit {
+  color: var(--danger);
+  animation: shake 0.5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes shake {
+  0% {
+    transform: scale(1.1);
+  }
+  25% {
+    transform:scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  75% {
+    transform:scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
 }
 .hidden {
   display: none;
@@ -101,6 +122,9 @@ button {
 }
 button#hit {
   background-color: var(--accent);
+}
+button#reset-game{
+  background-color: var(--danger);
 }
 #round {
   font-size: 36px;

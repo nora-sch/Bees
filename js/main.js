@@ -33,7 +33,8 @@ function hitBee(event) {
         data[randomBeeId].life > 0 &&
         data[randomBeeId].life <= data[randomBeeId].damage
       ) {
-        selectedBee.classList.add("last-hit");
+
+        cardInfoLife.classList.add("last-hit");
       } else if (data[randomBeeId].life <= 0) {
         if (data[randomBeeId].name === "Queen") {
           const beesSection = document.getElementById("bees-list");
@@ -59,7 +60,7 @@ function hitBee(event) {
           }
           liveBees = [];
         }
-        selectedBee.classList.remove("last-hit");
+        cardInfoLife.classList.remove("last-hit");
         selectedBee.classList.add("defeated");
         // if defeated - delete one from liveBees array for select this bee anymore
         liveBees = liveBees.filter((beeIndex) => beeIndex !== randomBeeId);

@@ -4,8 +4,6 @@ require_once './Class/Worker.php';
 require_once './Class/Scout.php';
 require_once './functions.php';
 
-// php -S localhost:3000
-
 $bees = [];
 $bees_to_display = [];
 
