@@ -1,5 +1,5 @@
 # BEES
-
+[VIDEO technical test Bees](https://github.com/nora-sch/Bees/assets/62623658/41cb9f29-51ed-495f-9957-aca5d7910821)
 ![interface of bees game](./img/bees-game.png)
 
 To start game in browser with address http://localhost:3000/ - 
